@@ -1,35 +1,22 @@
-import dbClient from '../utils/db';
+const RedisClient = require('../utils/redis');
+const DbClient = require('../utils/db');
 
 class AppController {
-    static async getStatus(req, res) {
-        const isDbAlive = await dbClient.isAlive();
+    static getStatus(req, res) {
+	const redisAlive = RedisClient.isAlive();
+	const dbAlive = DbClient.isAlive();
 
-        if (isDbAlive) {
-            res.status(200).json({
-                redis: true,
-                db: true,
-            });
-        } else {
-            res.status(500).json({
-                error: 'Database connection error',
-            });
-        }
+	if (redisAlive && dbAlive) {
+	    res.json({ redis: true, db: true });
+	    res.end();
+	}
     }
 
     static async getStats(req, res) {
-        try {
-            const usersCount = await dbClient.nbUsers();
-            const filesCount = await dbClient.nbFiles();
-
-            res.status(200).json({
-                users: usersCount,
-                files: filesCount,
-            });
-        } catch (error) {
-            res.status(500).json({
-                error: 'Error retrieving stats',
-            });
-        }
+	const users = await DbClient.nbUsers();
+	const files = await DbClient.nbFiles();
+	res.json({ users, files });
+	res.end();
     }
 }
 
