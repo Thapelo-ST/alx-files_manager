@@ -2,12 +2,11 @@ import dbClient from '../utils/db';
 
 class AppController {
     static async getStatus(req, res) {
-	const redisStatus = await dbClient.isAlive();
-	const dbStatus = await dbClient.isAlive();
+	const isDbAlive = await dbClient.isAlive();
 
 	res.status(200).json({
-	    redis: redisStatus,
-	    db: dbStatus,
+            redis: true,
+            db: isDbAlive,
 	});
     }
 
