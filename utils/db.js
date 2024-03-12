@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import { MongoClient } from 'mongodb';
 
 class DBClient {
     constructor () {
@@ -7,31 +7,36 @@ class DBClient {
             DB_PORT = 27017,
             DB_DATABASE = 'files_manager',
         } = process.env;
-        
-        const connectionString = `mongodb://${DB_HOST}:${DB_PORT}/${DB_DATABASE}`;
 
-        mongoose.connect(connectionString, {
+        this.client = new MongoClient(`mongodb://${DB_HOST}:${DB_PORT}`,{
             userNewUrlParser: true,
             userUnifiedTopology: true,
         });
 
-        this.db = mongoose.connection;
-
-        this.db.on('error', (error) => {
-            console.log(`MongoDB error: ${error}`);
-        });
+        this.databaseName = DB_DATABASE;
     }
 
-    isAlive() {
-        return this.db.readyState === 1;
+    async isAlive() {
+        try {
+            await this.client.connect();
+            return true;
+        } catch (error) {
+            return false;
+        }  finally {
+            await this.client.close();
+        }
     }
 
     async nbUsers() {
-        return mongoose.model('files').countDocuments();
+        const database = this.client.db(this.databaseName);
+        const usersCollection = database.collection('users');
+        return usersCollection.countDocuments();
     }
     
     async nbFiles() {
-        return mongoose.model('files').countDocuments();
+        const database = this.client.db(this.databaseName);
+        const filesCollection = database.collection('files');
+        return filesCollection.countDocuments();
     }
 }
 
