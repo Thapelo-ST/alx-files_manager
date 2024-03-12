@@ -14,17 +14,22 @@ class DBClient {
 	});
 
 	this.databaseName = DB_DATABASE;
+	this.connected = false;
+	this.connect();
     }
 
-    async isAlive() {
+    async connect() {
 	try {
 	    await this.client.connect();
-	    return true;
+	    this.connected = true;
 	} catch (error) {
-	    return false;
-	} finally {
-	    await this.client.close();
+	    console.error(error.message);
+	    this.connected = false;
 	}
+    }
+
+    isAlive() {
+	return this.connected;
     }
 
     async nbUsers() {
@@ -39,16 +44,16 @@ class DBClient {
 	return filesCollection.countDocuments();
     }
 
-    async getUser(query) {
-	const database = this.client.db(this.databaseName);
-	const usersCollection = database.collection('users');
-	return usersCollection.findOne(query);
-    }
-
     async createUser(user) {
 	const database = this.client.db(this.databaseName);
 	const usersCollection = database.collection('users');
 	return usersCollection.insertOne(user);
+    }
+
+    async getUser(query) {
+	const database = this.client.db(this.databaseName);
+	const usersCollection = database.collection('users');
+	return usersCollection.findOne(query);
     }
 }
 
