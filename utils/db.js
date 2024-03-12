@@ -38,6 +38,18 @@ class DBClient {
 	const filesCollection = database.collection('files');
 	return filesCollection.countDocuments();
     }
+
+    async getUser(query) {
+	const database = this.client.db(this.databaseName);
+	const usersCollection = database.collection('users');
+	return usersCollection.findOne(query);
+    }
+
+    async createUser(user) {
+	const database = this.client.db(this.databaseName);
+	const usersCollection = database.collection('users');
+	return usersCollection.insertOne(user);
+    }
 }
 
 const dbClient = new DBClient();
