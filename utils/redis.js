@@ -40,7 +40,7 @@ class RedisClient {
     async del(key) {
         return new Promise((resolve, reject) => {
             this.client.del(key, (err, reply) =>  {
-               resolve(reply); 
+                resolve(reply); 
             });
         });
     }
