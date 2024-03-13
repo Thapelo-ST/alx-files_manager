@@ -1,6 +1,9 @@
+import { v4 as uuidv4 } from 'uuid';
 import sha1 from 'sha1';
 import Queue from 'bull/lib/queue';
 import dbClient from '../utils/db';
+import redisClient from '../utils/redis';
+import base64 from 'base-64';
 
 const userQueue = new Queue('email sending');
 
@@ -37,3 +40,4 @@ export default class UsersController {
     res.status(200).json({ email: user.email, id: user._id.toString() });
   }
 }
+module.exports = UsersController;

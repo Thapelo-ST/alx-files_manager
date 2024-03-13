@@ -1,5 +1,7 @@
 import { v4 as uuid4 } from 'uuid';
 import redisClient from '../utils/redis';
+import DBClient from '../utils/db';
+import base64 from 'base-64';
 
 export default class AuthController {
   static async getConnect(req, res) {
@@ -17,3 +19,5 @@ export default class AuthController {
     res.status(204).send();
   }
 }
+
+module.exports = AuthController;
