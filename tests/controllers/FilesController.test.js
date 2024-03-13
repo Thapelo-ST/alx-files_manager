@@ -1,4 +1,4 @@
-mport { tmpdir } from 'os';
+import { tmpdir } from 'os';
 import { join as joinPath } from 'path';
 import { existsSync, readdirSync, unlinkSync, statSync } from 'fs';
 import dbClient from '../../utils/db';

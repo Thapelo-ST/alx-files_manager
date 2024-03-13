@@ -1,4 +1,4 @@
-mport dbClient from '../../utils/db';
+import dbClient from '../../utils/db';
 
 describe('+ AppController', () => {
   before(function (done) {
