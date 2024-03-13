@@ -19,5 +19,3 @@ export default class AuthController {
     res.status(204).send();
   }
 }
-
-module.exports = AuthController;

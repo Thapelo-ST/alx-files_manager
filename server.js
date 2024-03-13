@@ -1,14 +1,13 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import routes from './routes';
-
-dotenv.config();
+import Routes from './routes/index';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
-app.use('/', routes);
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.use(express.json());
+Routes(app);
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
+
+export default app;
