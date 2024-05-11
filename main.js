@@ -1,26 +1,24 @@
-import dbClient from './utils/db';
+const dbClient = require('./utils/db');
 
-const waitConnection = () => new Promise((resolve, reject) => {
-  let i = 0;
-  const repeatFct = async () => {
-    await setTimeout(() => {
-      i += 1;
-      if (i >= 10) {
-        reject();
-      } else if (!dbClient.isAlive()) {
-        repeatFct();
-      } else {
-        resolve();
-      }
-    }, 1000);
-  };
-  repeatFct();
-});
+async function main() {
+  // Check if the connection is alive
+  console.log(dbClient.isAlive());
 
-(async () => {
-  console.log(dbClient.isAlive());
-  await waitConnection();
-  console.log(dbClient.isAlive());
-  console.log(await dbClient.nbUsers());
-  console.log(await dbClient.nbFiles());
-})();
+  // Get the number of users
+  try {
+    const numUsers = await dbClient.nbUsers();
+    console.log(`Number of users: ${numUsers}`);
+  } catch (err) {
+    console.error(`Failed to get number of users: ${err}`);
+  }
+
+  // Get the number of files
+  try {
+    const numFiles = await dbClient.nbFiles();
+    console.log(`Number of files: ${numFiles}`);
+  } catch (err) {
+    console.error(`Failed to get number of files: ${err}`);
+  }
+}
+
+main();
