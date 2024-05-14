@@ -1,6 +1,4 @@
 const { MongoClient } = require('mongodb');
-const fs = require('fs');
-const path = require('path'); 
 
 class DBClient {
   constructor() {
