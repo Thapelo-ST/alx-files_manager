@@ -47,6 +47,15 @@ class DBClient {
     const user = await this.client.db(this.database).collection('users').findOne({ _id });
     return user;
   }
+
+  async create_file(file) {
+  await this.client.connect();
+  const result = await this.client
+    .db(this.database)
+    .collection('files')
+    .insertOne(file);
+  return result.ops[0];
+}
 }
 
 const dbClient = new DBClient();
