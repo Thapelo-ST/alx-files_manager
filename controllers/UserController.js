@@ -16,7 +16,6 @@ class UserController {
         return res.status(400).json({ error: 'Missing password' });
       }
 
-      await dbClient.connect();
       const existingUser = await dbClient.db.collection('users').findOne({ email });
       if (existingUser) {
         return res.status(400).json({ error: 'Already exist' });
@@ -28,9 +27,9 @@ class UserController {
         password: hashedPassword,
       };
 
-      const result = await dbClient.db(this.database).collection('users').insertOne(newUser);
       // const result = await dbClient.db.collection('users').insertOne(newUser);
-      return res.status(201).json({ id: result._id, email});
+      const result = await dbClient.db.collection('users').insertOne(newUser);
+      return res.status(201).json({ id: result.insertedId, email });
     } catch (err) {
       console.error(`Failed to create user: ${err}`);
       return res.status(500).json({ error: 'Failed to create user' });
@@ -38,4 +37,4 @@ class UserController {
   }
 }
 
-export default UserController;
+module.exports = UserController;

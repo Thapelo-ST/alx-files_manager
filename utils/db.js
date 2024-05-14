@@ -14,7 +14,7 @@ class DBClient {
         this.connected = true;
       })
       .catch((err) => console.log(err.message));
-    // this.db = this.client.db(this.database);
+    this.db = this.client.db(this.database);
   }
 
   isAlive() {
