@@ -17,4 +17,3 @@ router.get('/disconnect', AuthController.getDisconnect);
 router.post('/users', UserController.postNew);
 
 module.exports = router;
-
