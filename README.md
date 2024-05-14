@@ -50,3 +50,30 @@ Copy the dump.rdb from the redis-5.0.7 directory into the root of the Queuing pr
 Requirements:
 
     Running get Holberton in the client, should return School
+# Mongo DB
+Download the latest release through the shell, issue the following:
+
+curl -O http://downloads.mongodb.org/linux/mongodb-linux-x86_64-2.6.12.tgz
+
+## Extract the files from the downloaded archive.
+
+For example, from a system shell, you can extract through the tar command:
+
+tar -zxvf mongodb-linux-x86_64-2.6.12.tgz
+
+## Copy the extracted archive to the target directory.
+
+Copy the extracted folder to the location from which MongoDB will run.
+
+mkdir -p mongodb
+cp -R -n mongodb-linux-x86_64-2.6.12/ mongodb
+
+## Ensure the location of the binaries is in the PATH variable.
+
+The MongoDB binaries are in the bin/ directory of the archive. To ensure that the binaries are in your PATH, you can modify your PATH.
+
+For example, you can add the following line to your shell’s rc file (e.g. ~/.bashrc):
+
+export PATH=<mongodb-install-directory>/bin:$PATH
+
+Replace <mongodb-install-directory> with the path to the extracted MongoDB archive.
