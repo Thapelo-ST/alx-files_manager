@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const { ObjectId } = require('mongodb');
 
 class DBClient {
   constructor() {
@@ -37,6 +38,14 @@ class DBClient {
       .collection('files')
       .countDocuments();
     return users;
+  }
+
+  // helping functions
+  async find_user(id) {
+    const _id = new ObjectId(id);
+    await this.client.connect();
+    const user = await this.client.db(this.database).collection('users').findOne({ _id });
+    return user;
   }
 }
 
