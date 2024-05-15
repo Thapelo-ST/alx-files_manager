@@ -49,13 +49,13 @@ class DBClient {
   }
 
   async create_file(file) {
-  await this.client.connect();
-  const result = await this.client
-    .db(this.database)
-    .collection('files')
-    .insertOne(file);
-  return result.ops[0];
-}
+    await this.client.connect();
+    const result = await this.client
+      .db(this.database)
+      .collection('files')
+      .insertOne(file);
+    return result.ops[0];
+  }
 }
 
 const dbClient = new DBClient();

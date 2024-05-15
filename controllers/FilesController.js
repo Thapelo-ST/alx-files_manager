@@ -65,8 +65,16 @@ class FilesController {
       return res.status(400).send({ error: 'Invalid data' });
     }
 
-    const newFile = await dbClient.create_file({ userId, name, type, parentId, isPublic, localPath });
-    return res.status(201).send(newFile);
+    const newFile = await dbClient.create_file({ userId, name, type, parentId, isPublic , localPath});
+    let responseFile = {
+      _id: newFile._id,
+      userId: newFile.userId,
+      name: newFile.name,
+      type: newFile.type,
+      parentId: newFile.parentId,
+      isPublic: newFile.isPublic
+    };
+    return res.status(201).send(responseFile);
   }
 }
 
