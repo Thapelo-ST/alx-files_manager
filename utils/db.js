@@ -56,6 +56,28 @@ class DBClient {
       .insertOne(file);
     return result.ops[0];
   }
+
+  async find_files(query, page) {
+    await this.client.connect();
+    const files = await this.client
+      .db(this.database)
+      .collection('files')
+      .find(query)
+      .skip(page * 20)
+      .limit(20)
+      .toArray();
+    return files;
+  }
+
+  async find_file(query) {
+    try {
+      const file = await File.findOne(query);
+      return file;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
 }
 
 const dbClient = new DBClient();

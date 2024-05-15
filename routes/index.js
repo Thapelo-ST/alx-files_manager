@@ -12,6 +12,8 @@ router.get('/stats', AppController.getStats);
 router.get('/users/me', UserController.getMe);
 router.get('/connect', AuthController.getConnect);
 router.get('/disconnect', AuthController.getDisconnect);
+router.get('/files/:id', FilesController.getShow);
+router.get('/files', FilesController.getIndex);
 
 // Post
 
